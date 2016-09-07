@@ -9,7 +9,7 @@ import Counter
 -- model definition
 type alias Model =
   { counters : List IndexedCounter
-  , uid : Int
+  , nextID : Int
   }
 
 type alias IndexedCounter =
@@ -26,31 +26,31 @@ type Msg
 -- init model function
 model: Model
 model =
-  { counters = [], uid = 0 }
+  { counters = [], nextID = 0 }
 
 update: Msg -> Model -> Model
-update msg ({counters, uid} as model) =
+update msg ({counters, nextID} as model) =
   case msg of
     Insert ->
       { model
-        | counters = counters ++ [ IndexedCounter uid Counter.model ]
-        , uid = uid + 1
+        | counters = counters ++ [ IndexedCounter nextID Counter.model ]
+        , nextID = nextID + 1
       }
     Remove id ->
       { model |
         counters = List.filter (\(counter) -> counter.id /= id) counters
       }
-    Modify id msg ->
-      case msg of
+    Modify id counterMsg ->
+      case counterMsg of
         Counter.Remove ->
           update (Remove id) model
         _ ->
-          { model | counters = List.map (updateHelp id msg) counters }
+          { model | counters = List.map (updateHelp id counterMsg) counters }
 
 updateHelp : Int -> Counter.Msg -> IndexedCounter -> IndexedCounter
-updateHelp targetId msg { id, model } =
+updateHelp targetId counterMsg { id, model } =
   let
-    newModel = if targetId == id then Counter.update msg model else model
+    newModel = if targetId == id then Counter.update counterMsg model else model
   in
     IndexedCounter id newModel
 

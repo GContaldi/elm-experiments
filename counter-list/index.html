@@ -7433,22 +7433,22 @@ var _user$project$Counter$viewWithRemove = function (model) {
 var _user$project$CounterList$model = {
 	counters: _elm_lang$core$Native_List.fromArray(
 		[]),
-	uid: 0
+	nextID: 0
 };
 var _user$project$CounterList$Model = F2(
 	function (a, b) {
-		return {counters: a, uid: b};
+		return {counters: a, nextID: b};
 	});
 var _user$project$CounterList$IndexedCounter = F2(
 	function (a, b) {
 		return {id: a, model: b};
 	});
 var _user$project$CounterList$updateHelp = F3(
-	function (targetId, msg, _p0) {
+	function (targetId, counterMsg, _p0) {
 		var _p1 = _p0;
 		var _p3 = _p1.model;
 		var _p2 = _p1.id;
-		var newModel = _elm_lang$core$Native_Utils.eq(targetId, _p2) ? A2(_user$project$Counter$update, msg, _p3) : _p3;
+		var newModel = _elm_lang$core$Native_Utils.eq(targetId, _p2) ? A2(_user$project$Counter$update, counterMsg, _p3) : _p3;
 		return A2(_user$project$CounterList$IndexedCounter, _p2, newModel);
 	});
 var _user$project$CounterList$Modify = F2(
@@ -7470,7 +7470,7 @@ var _user$project$CounterList$update = F2(
 		update:
 		while (true) {
 			var _p7 = _p6;
-			var _p14 = _p7.uid;
+			var _p14 = _p7.nextID;
 			var _p13 = _p7;
 			var _p12 = _p7.counters;
 			var _p8 = msg;
@@ -7486,7 +7486,7 @@ var _user$project$CounterList$update = F2(
 									[
 										A2(_user$project$CounterList$IndexedCounter, _p14, _user$project$Counter$model)
 									])),
-							uid: _p14 + 1
+							nextID: _p14 + 1
 						});
 				case 'Remove':
 					return _elm_lang$core$Native_Utils.update(
@@ -7500,11 +7500,11 @@ var _user$project$CounterList$update = F2(
 								_p12)
 						});
 				default:
-					var _p11 = _p8._1;
-					var _p10 = _p8._0;
-					var _p9 = _p11;
+					var _p11 = _p8._0;
+					var _p10 = _p8._1;
+					var _p9 = _p10;
 					if (_p9.ctor === 'Remove') {
-						var _v5 = _user$project$CounterList$Remove(_p10),
+						var _v5 = _user$project$CounterList$Remove(_p11),
 							_v6 = _p13;
 						msg = _v5;
 						_p6 = _v6;
@@ -7515,7 +7515,7 @@ var _user$project$CounterList$update = F2(
 							{
 								counters: A2(
 									_elm_lang$core$List$map,
-									A2(_user$project$CounterList$updateHelp, _p10, _p11),
+									A2(_user$project$CounterList$updateHelp, _p11, _p10),
 									_p12)
 							});
 					}
