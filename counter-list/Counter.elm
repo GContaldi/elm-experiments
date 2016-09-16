@@ -2,6 +2,7 @@ module Counter exposing (..)
 
 import Html exposing (..)
 import Html.Events exposing (..)
+import Html.Attributes exposing (..)
 
 -- model definition
 type alias Model = Int
@@ -32,7 +33,9 @@ viewWithRemove : Model -> Html Msg
 viewWithRemove model =
   div []
     [ button [ onClick Decrement ] [ text "-" ]
-    , div [] [ toString model |> text ]
+    , div [
+        style [ ("display", "inline") ]
+      ] [ toString model |> text ]
     , button [ onClick Increment ] [ text "+" ]
     , button [ onClick Remove ] [ text "Remove" ]
     ]

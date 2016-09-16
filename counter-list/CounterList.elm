@@ -1,3 +1,4 @@
+
 module CounterList exposing (..)
 
 import Html exposing (..)
@@ -5,6 +6,12 @@ import Html.App exposing (..)
 import Html.Events exposing (..)
 
 import Counter
+
+-- actions definitions
+type Msg
+  = Insert
+  | Remove Int
+  | Modify Int Counter.Msg
 
 -- model definition
 type alias Model =
@@ -15,13 +22,7 @@ type alias Model =
 type alias IndexedCounter =
   { id : Int
   , model : Counter.Model
-}
-
--- actions definitions
-type Msg
-  = Insert
-  | Remove Int
-  | Modify Int Counter.Msg
+  }
 
 -- init model function
 model: Model
